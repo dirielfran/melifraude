@@ -1,4 +1,4 @@
-##Geolocalizacion 
+# Geolocalizacion 
 
 ---
 
@@ -104,7 +104,7 @@ Geolocalizacion es un proyecto Web desarrollado con el core de spring, renderiza
 				Descripcion: 	Distancia maxima del pais donde se consulto la ip
 				tipo:			Double
 
-				
+
 
 
 
