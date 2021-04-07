@@ -24,6 +24,7 @@ public class InformacionPais implements Serializable{
 	/** The currencies. */
 	private List<Map<String, String>> currencies;
 
+
 	/**
 	 * Gets the name.
 	 *
@@ -113,7 +114,9 @@ public class InformacionPais implements Serializable{
 	public void setCurrencies(List<Map<String, String>> currencies) {
 		this.currencies = currencies;
 	}
-	
+
+
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 4955606283974087083L;
 	

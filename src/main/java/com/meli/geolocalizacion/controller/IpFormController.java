@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -49,27 +50,27 @@ public class IpFormController {
   	 * @return the string
   	 */
   	@GetMapping("/vadaIp")
-	  public String geolocalizacion(@RequestParam String ip, Model modelo ){
-			try {
-				String ipformat = Utils.validate(ip);
-				String cod = paisService.getCodPais(ipformat);
-				InformacionPais paisInfoOrigen = paisService.getPaisInfo("ar");
-				InformacionPais paisInfo = paisService.getPaisInfo(cod);
-				String codigo = paisInfo.getCurrencies().get(0).get("code");
-				Double distancia = paisService.getDistancia(paisInfoOrigen, paisInfo);
-				estadisticasService.saveIps(ipformat, distancia, paisInfoOrigen.getName(), paisInfo.getName());
-				modelo.addAttribute("horas", paisService.getHoras(paisInfo));
-				modelo.addAttribute("pais",paisInfo);
-				modelo.addAttribute("distancia", distancia);
-				modelo.addAttribute("cotizacion", paisService.getCotizacionDolar(codigo , "USD"));					
-			}catch(IpException ipe) {
-				modelo.addAttribute("mensaje", ipe.getMessage());
-			}catch (DolarException de) {
-				modelo.addAttribute("cotizacionmsg", de.getMessage());
-			} catch (Exception e) {
-				e.getMessage();
-			}			
-			return "formIp";
+  	public String geolocalizacion(@RequestParam String ip, Model modelo ){
+		try {
+			String ipformat = Utils.validate(ip);
+			String cod = paisService.getCodPais(ipformat);
+			InformacionPais paisInfoOrigen = paisService.getPaisInfo("ar");
+			InformacionPais paisInfo = paisService.getPaisInfo(cod);
+			String codigo = paisInfo.getCurrencies().get(0).get("code");
+			Double distancia = paisService.getDistancia(paisInfoOrigen, paisInfo);
+			estadisticasService.saveIps(ipformat, distancia, paisInfoOrigen.getName(), paisInfo.getName());
+			modelo.addAttribute("horas", paisService.getHoras(paisInfo));
+			modelo.addAttribute("pais",paisInfo);
+			modelo.addAttribute("distancia", distancia);
+			modelo.addAttribute("cotizacion", paisService.getCotizacionDolar(codigo , "USD"));					
+		}catch(IpException ipe) {
+			modelo.addAttribute("mensaje", ipe.getMessage());
+		}catch (DolarException de) {
+			modelo.addAttribute("cotizacionmsg", de.getMessage());
+		} catch (Exception e) {
+			modelo.addAttribute("mensaje",e.getMessage());
 		}
+		return "formIp";
+  	}
 }
 
